@@ -4,7 +4,6 @@
 
 Simple backend implementation of the database used for the plansoft angular course for high schools
 
-
 framework used: [Nestjs](https://github.com/nestjs/nest).
 
 ## Installation
@@ -30,7 +29,7 @@ $ npm run start:prod
 
 ## Authors 👨🏼‍💻
 
-[Iacopo Ciao](https://github.com/KernelPanic92), [Miki Lombardi](https://github.com/TheJoin95), Gabriele Puliti
+[Iacopo Ciao](https://github.com/KernelPanic92), [Miki Lombardi](https://github.com/TheJoin95), [Gabriele Puliti](https://github.com/wabri)
 
 Sponsored by [Plansoft](https://www.linkedin.com/company/plangroup/)
 
