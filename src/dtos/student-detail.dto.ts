@@ -1,4 +1,4 @@
-import { ClassDTO } from 'src/dtos/class.dto';
+import { ClassDTO } from 'src/dtos';
 export class StudentDetailDTO {
 
 	public readonly class: ClassDTO;

@@ -1,8 +1,8 @@
-import { ClassDTO } from './../dtos';
-import { Repository } from "typeorm";
-import { Class } from "src/entities";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Injectable } from "@nestjs/common";
+import { ClassDTO } from 'src/dtos';
+import { Repository } from 'typeorm';
+import { Class } from 'src/entities';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ClassService {

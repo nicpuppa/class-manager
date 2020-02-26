@@ -1,7 +1,6 @@
-import { StudentService } from './../services/student.service';
-import { Controller, Get, Param, NotFoundException } from "@nestjs/common";
-import { StudentItemDTO } from 'src/dtos';
-import { StudentDetailDTO } from 'src/dtos/student-detail.dto';
+import { StudentService } from 'src/services';
+import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
+import { StudentItemDTO, StudentDetailDTO } from 'src/dtos';
 
 @Controller()
 export class StudentController {
@@ -16,10 +15,10 @@ export class StudentController {
 	}
 
 	@Get('students/:id')
-	public async findAll(@Param('id') id: number): Promise<StudentDetailDTO> {
+	public async findById(@Param('id') id: number): Promise<StudentDetailDTO> {
 
-		// find students by id
-		const studentDetail = await this.studentService.findOne(id);
+		// find student by id
+		const studentDetail = await this.studentService.findById(id);
 
 		// return 404 http status when student not exists
 		if (!studentDetail) throw new NotFoundException(`Student ${id}`);

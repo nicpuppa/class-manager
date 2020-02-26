@@ -1,10 +1,8 @@
-import { ClassDTO } from 'src/dtos/class.dto';
-import { StudentItemDTO } from './../dtos';
-import { Repository } from "typeorm";
-import { Student } from "src/entities";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Injectable } from "@nestjs/common";
-import { StudentDetailDTO } from 'src/dtos/student-detail.dto';
+import { StudentItemDTO, ClassDTO, StudentDetailDTO } from 'src/dtos';
+import { Repository } from 'typeorm';
+import { Student } from 'src/entities';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
 import { constants } from 'src/constants/constants';
 import { isNullOrUndefined } from 'util';
 
@@ -53,7 +51,7 @@ export class StudentService {
 	 * ### examples
 	 * ```typescript
 	 *
-	 * const student = await studentService.findOne(1);
+	 * const student = await studentService.findById(1);
 	 * console.log(student);
 	 *
 	 * ```
@@ -61,7 +59,7 @@ export class StudentService {
 	 * @param id non-null
 	 * @throws `Error` when id is null
 	 */
-	public async findOne(id: number): Promise<StudentDetailDTO> {
+	public async findById(id: number): Promise<StudentDetailDTO> {
 
 		if (isNullOrUndefined(id)) throw new Error('id cannot be null');
 
@@ -79,7 +77,7 @@ export class StudentService {
 
 		// enrollments contains at least one element. await keyword unwrap already fetched data.
 		const enrollments = await student.enrollments;
-		let classDTO: ClassDTO = undefined;
+		let classDTO: ClassDTO;
 
 		if (enrollments.length > 0) {
 

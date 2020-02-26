@@ -1,6 +1,6 @@
-import { ClassService } from '../services/class.service';
-import { Controller, Get } from "@nestjs/common";
-import { ClassDTO } from 'src/dtos/class.dto';
+import { ClassService } from 'src/services';
+import { Controller, Get } from '@nestjs/common';
+import { ClassDTO } from 'src/dtos';
 
 @Controller('classes')
 export class ClassController {

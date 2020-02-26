@@ -1,7 +1,5 @@
-import { AcademicYear } from './academic-year.entity';
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
-import { Student } from './student.entity';
-import { Class } from './class.entity';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Student, Class, AcademicYear } from 'src/entities';
 
 
 @Entity({ name: 'ALUNNO_CLASSE' })

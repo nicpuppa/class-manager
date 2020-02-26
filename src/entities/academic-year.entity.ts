@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
-import { ClassEnrollment } from "./class-enrollment.entity";
+import { ClassEnrollment } from 'src/entities';
 
 @Entity({ name: 'ANNO_SCOL' })
 export class AcademicYear {

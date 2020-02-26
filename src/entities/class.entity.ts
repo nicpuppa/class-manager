@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { ClassEnrollment } from './class-enrollment.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { ClassEnrollment } from 'src/entities';
 
 @Entity({ name: 'CLASSE' })
 export class Class {

@@ -5,17 +5,14 @@ import {
 	StudentService,
 	ClassService,
 	ClassController,
-	StudentController
-} from './class-manager';
-
-import * as path from 'path';
-
-import {
+	StudentController,
 	Class,
 	AcademicYear,
 	ClassEnrollment,
 	Student
-} from './entities';
+} from './class-manager';
+
+import * as path from 'path';
 
 @Module({
 	imports: [
