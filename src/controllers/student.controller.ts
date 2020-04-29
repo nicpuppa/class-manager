@@ -46,7 +46,6 @@ export class StudentController {
 			throw new BadRequestException(`empty body`);
 		}
 
-		// find student by id
 		return this.studentService.addStudent(student);
 
 	}
