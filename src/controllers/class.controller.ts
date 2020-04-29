@@ -18,7 +18,7 @@ export class ClassController {
 		const classDetail = await this.classService.findById(id);
 
 		// return 404 http status when class not exists
-		if (!classDetail) throw new NotFoundException(`Student ${id}`);
+		if (!classDetail) throw new NotFoundException(`class ${id}`);
 
 		return classDetail;
 
