@@ -8,7 +8,9 @@ import {
 	ClassSerializerInterceptor
 } from '@nestjs/common';
 import { StudentDetailDTO } from 'src/dtos';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('students')
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller()
 export class StudentController {
@@ -16,6 +18,7 @@ export class StudentController {
 	public constructor(private readonly studentService: StudentService) {}
 
 	@Get('students/:id')
+	@ApiCreatedResponse({ type: StudentDetailDTO })
 	public async findById(@Param('id') id: number): Promise<StudentDetailDTO> {
 
 		// find student by id

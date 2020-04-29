@@ -8,7 +8,9 @@ import {
 	ClassSerializerInterceptor
 } from '@nestjs/common';
 import { CourseDTO } from 'src/dtos';
+import { ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
 
+@ApiTags('classes')
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('classes')
 export class CourseController {
@@ -16,11 +18,13 @@ export class CourseController {
 	public constructor(private readonly courseService: CourseService) {}
 
 	@Get()
+	@ApiCreatedResponse({ type: CourseDTO, isArray: true })
 	public findAll(): Promise<CourseDTO[]> {
 		return this.courseService.findAll();
 	}
 
 	@Get(':id')
+	@ApiCreatedResponse({ type: CourseDTO })
 	public async findById(@Param('id') id: number): Promise<CourseDTO> {
 
 		const courseDetail = await this.courseService.findById(id);
