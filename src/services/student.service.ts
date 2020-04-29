@@ -14,6 +14,7 @@ export class StudentService {
 	 * Find student by id
 	 *
 	 * ### examples
+	 *
 	 * ```typescript
 	 *
 	 * const student = await studentService.findById(1);

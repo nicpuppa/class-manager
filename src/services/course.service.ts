@@ -12,6 +12,16 @@ export class CourseService {
 
 	/**
 	 * find all courses in repository sorted by section and year
+	 *
+	 * ### examples
+	 *
+	 * ```typescript
+	 *
+	 * const courses = await courseService.findAll();
+	 * console.log(courses);
+	 *
+	 * ```
+	 *
 	 */
 	public async findAll(): Promise<CourseDTO[]> {
 
@@ -26,9 +36,23 @@ export class CourseService {
 	}
 
 	/**
-	 * find one course by id
+	 * Find course by id
+	 *
+	 * ### examples
+	 *
+	 * ```typescript
+	 *
+	 * const course = await courseService.findById(1);
+	 * console.log(course);
+	 *
+	 * ```
+	 *
+	 * @param id non-null
+	 * @throws `Error` when id is null
 	 */
 	public async findById(id: number): Promise<CourseDetailDTO> {
+
+		if (isNullOrUndefined(id)) throw new Error('id cannot be null');
 
 		const course = await this.courseRepository.findOne(id, { relations: ['students'] });
 
