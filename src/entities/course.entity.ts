@@ -1,4 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	OneToMany
+} from 'typeorm';
 import { Student } from '.';
 
 @Entity({ name: 'CLASSES' })

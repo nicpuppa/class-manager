@@ -1,5 +1,12 @@
 import { CourseService } from 'src/services';
-import { Controller, Get, Param, NotFoundException, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Param,
+	NotFoundException,
+	UseInterceptors,
+	ClassSerializerInterceptor
+} from '@nestjs/common';
 import { CourseDTO } from 'src/dtos';
 
 @UseInterceptors(ClassSerializerInterceptor)

@@ -1,5 +1,11 @@
 import { Course } from 'src/entities';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	ManyToOne,
+	JoinColumn
+} from 'typeorm';
 
 @Entity({ name: 'STUDENTS' })
 export class Student {
