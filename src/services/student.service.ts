@@ -88,6 +88,23 @@ export class StudentService {
 
 	}
 
+	public async removeStudent(id: number): Promise<StudentDetailDTO> {
+
+		const student = await this.studentRepository.findOne(id);
+
+		if (isNullOrUndefined(student)) {
+			throw new NotFoundException(`student ${id}`);
+		}
+
+		const response = {... student};
+
+		await this.studentRepository.remove(student);
+
+		return this.studentToStudentDetailDto(response);
+
+	}
+
+
 	private studentToStudentDetailDto(student: Student): StudentDetailDTO {
 
 		if (isNullOrUndefined(student)) {

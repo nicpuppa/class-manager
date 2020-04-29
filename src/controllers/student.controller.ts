@@ -11,19 +11,20 @@ import {
 	Post,
 	Body,
 	BadRequestException,
-	HttpCode
+	HttpCode,
+	Delete
 } from '@nestjs/common';
 import { StudentDetailDTO } from 'src/dtos';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('students')
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller()
+@Controller('students')
 export class StudentController {
 
 	public constructor(private readonly studentService: StudentService) {}
 
-	@Get('students/:id')
+	@Get(':id')
 	@ApiCreatedResponse({ type: StudentDetailDTO })
 	public async findById(@Param('id') id: number): Promise<StudentDetailDTO> {
 
@@ -37,7 +38,7 @@ export class StudentController {
 
 	}
 
-	@Post('students')
+	@Post()
 	@HttpCode(201)
 	@ApiCreatedResponse({ type: StudentDetailDTO })
 	public addStudent(@Body() student: CreateStudentDTO): Promise<StudentDetailDTO> {
@@ -47,6 +48,14 @@ export class StudentController {
 		}
 
 		return this.studentService.addStudent(student);
+
+	}
+
+	@Delete(':id')
+	@ApiCreatedResponse({ type: StudentDetailDTO })
+	public removeStudent(@Param('id') id: number): Promise<StudentDetailDTO> {
+
+		return this.studentService.removeStudent(id);
 
 	}
 
