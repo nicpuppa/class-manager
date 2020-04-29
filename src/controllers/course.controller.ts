@@ -20,7 +20,9 @@ export class CourseController {
 	@Get()
 	@ApiCreatedResponse({ type: CourseDTO, isArray: true })
 	public findAll(): Promise<CourseDTO[]> {
+
 		return this.courseService.findAll();
+
 	}
 
 	@Get(':id')
