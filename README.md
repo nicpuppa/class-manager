@@ -25,6 +25,14 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Swagger
+
+Open {application-base-url}/api in your browser to view swagger
+
+Example (localhost)
+
+`localhost:3000/api`
+
 ## Stay in touch
 
 ## Authors 👨🏼‍💻
