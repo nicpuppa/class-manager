@@ -1,14 +1,18 @@
 import { StudentDetailDTO } from 'src/dtos';
 import { Repository } from 'typeorm';
-import { Student } from 'src/entities';
+import { Student, Course } from 'src/entities';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { isNullOrUndefined } from 'util';
+import { CreateStudentDTO } from 'src/dtos/create-student.dto';
 
 @Injectable()
 export class StudentService {
 
-	public constructor(@InjectRepository(Student) private readonly studentRepository: Repository<Student>) {}
+	public constructor(
+		@InjectRepository(Student) private readonly studentRepository: Repository<Student>,
+		@InjectRepository(Course) private readonly courseRepository: Repository<Course>,
+	) {}
 
 	/**
 	 * Find student by id
@@ -32,8 +36,63 @@ export class StudentService {
 		// retrieve student with latest enrollment
 		const student = await this.studentRepository.findOne(id);
 
-		// when student is null return undefined
-		if (isNullOrUndefined(student)) return undefined;
+		return this.studentToStudentDetailDto(student);
+
+	}
+
+		/**
+	 * add new student
+	 *
+	 * ### examples
+	 *
+	 * ```typescript
+	 *
+	 * const student = await studentService.addStudent({});
+	 * console.log(student);
+	 *
+	 * ```
+	 *
+	 * @param id non-null
+	 * @throws `Error` when id is null
+	 */
+	public async addStudent(createStudentDTO: CreateStudentDTO): Promise<StudentDetailDTO> {
+
+		if (isNullOrUndefined(createStudentDTO)) {
+			throw new Error('student cannot be null');
+		}
+
+		const { name, surname, sidiCode, taxCode, courseId } = createStudentDTO;
+
+		let student = new Student();
+
+		student.name = name;
+		student.surname = surname;
+		student.sidiCode = sidiCode;
+		student.taxCode = taxCode;
+
+		if (!isNullOrUndefined(courseId)) {
+
+			const course = await this.courseRepository.findOne(courseId);
+
+			if (isNullOrUndefined(course)) {
+				throw new NotFoundException('course');
+			}
+
+			student.course = course;
+
+		}
+
+		student = await this.studentRepository.save(student);
+
+		return this.studentToStudentDetailDto(student);
+
+	}
+
+	private studentToStudentDetailDto(student: Student): StudentDetailDTO {
+
+		if (isNullOrUndefined(student)) {
+			return null;
+		}
 
 		const course = student.course;
 

@@ -1,3 +1,5 @@
+import { isNullOrUndefined } from 'util';
+import { CreateStudentDTO } from 'src/dtos/create-student.dto';
 import { StudentService } from 'src/services';
 import {
 	Controller,
@@ -5,7 +7,11 @@ import {
 	Param,
 	NotFoundException,
 	UseInterceptors,
-	ClassSerializerInterceptor
+	ClassSerializerInterceptor,
+	Post,
+	Body,
+	BadRequestException,
+	HttpCode
 } from '@nestjs/common';
 import { StudentDetailDTO } from 'src/dtos';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
@@ -28,6 +34,20 @@ export class StudentController {
 		if (!studentDetail) throw new NotFoundException(`Student ${id}`);
 
 		return studentDetail;
+
+	}
+
+	@Post('students')
+	@HttpCode(201)
+	@ApiCreatedResponse({ type: StudentDetailDTO })
+	public addStudent(@Body() student: CreateStudentDTO): Promise<StudentDetailDTO> {
+
+		if (isNullOrUndefined(student)) {
+			throw new BadRequestException(`empty body`);
+		}
+
+		// find student by id
+		return this.studentService.addStudent(student);
 
 	}
 
