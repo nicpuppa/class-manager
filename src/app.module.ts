@@ -3,10 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import {
 	StudentService,
-	ClassService,
-	ClassController,
+	CourseService,
+	CourseController,
 	StudentController,
-	Class,
+	Course,
 	Student
 } from './class-manager';
 
@@ -19,10 +19,10 @@ import * as path from 'path';
 			autoLoadEntities: true,
 			database: path.resolve(__dirname, '..', 'db.sqlite')
 		}),
-		TypeOrmModule.forFeature([Class, Student])
+		TypeOrmModule.forFeature([Course, Student])
 	],
 
-	controllers: [ClassController, StudentController],
-	providers: [ClassService, StudentService]
+	controllers: [CourseController, StudentController],
+	providers: [CourseService, StudentService]
 })
 export class AppModule {}

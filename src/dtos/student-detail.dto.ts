@@ -1,16 +1,28 @@
-import { ClassDTO } from '.';
+import { Expose, Exclude } from 'class-transformer';
 
+@Exclude()
 export class StudentDetailDTO {
 
-	public readonly class: ClassDTO;
+	@Expose()
+	public readonly id: number;
 
-	public constructor(
-		public readonly id: number,
-		public readonly name: string,
-		public readonly surname: string,
-		public readonly sidiCode: string,
-		public readonly taxCode: string,
-		public readonly classId: number
-	) { }
+	@Expose()
+	public readonly name: string;
+
+	@Expose()
+	public readonly surname: string;
+
+	@Expose()
+	public readonly sidiCode: string;
+
+	@Expose()
+	public readonly taxCode: string;
+
+	@Expose({name: 'classId'})
+	public readonly courseId: number;
+
+	public constructor(args: Partial<StudentDetailDTO>) {
+		Object.assign(this, args);
+	}
 
 }

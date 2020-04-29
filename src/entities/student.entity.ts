@@ -1,4 +1,4 @@
-import { Class } from 'src/entities';
+import { Course } from 'src/entities';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity({ name: 'STUDENTS' })
@@ -20,7 +20,7 @@ export class Student {
 	public taxCode: string;
 
 	@JoinColumn({ name: 'CLASS_ID' })
-	@ManyToOne(() => Class, clazz => clazz.students, {eager: true, lazy: false})
-	public clazz: Class;
+	@ManyToOne(() => Course, course => course.students, {eager: true, lazy: false})
+	public course: Course;
 
 }

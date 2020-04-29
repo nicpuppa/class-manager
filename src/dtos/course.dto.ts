@@ -1,18 +1,18 @@
 import { Expose, Exclude } from 'class-transformer';
 
 @Exclude()
-export class StudentItemDTO {
+export class CourseDTO {
 
 	@Expose()
 	public readonly id: number;
 
-	@Expose()
+	@Expose({name: 'section'})
 	public readonly name: string;
 
-	@Expose()
-	public readonly surname: string;
+	@Expose({name: 'year'})
+	public readonly grade: number;
 
-	public constructor(args: Partial<StudentItemDTO>) {
+	public constructor(args: Partial<CourseDTO>) {
 		Object.assign(this, args);
 	}
 

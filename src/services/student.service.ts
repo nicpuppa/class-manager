@@ -34,9 +34,16 @@ export class StudentService {
 		// when student is null return undefined
 		if (isNullOrUndefined(student)) return undefined;
 
-		const clazz = student.clazz;
+		const course = student.course;
 
-		return new StudentDetailDTO(student.id, student.name, student.surname, student.sidiCode, student.taxCode, clazz ? clazz.id : undefined);
+		return new StudentDetailDTO({
+			id: student.id,
+			name: student.name,
+			surname: student.surname,
+			sidiCode: student.sidiCode,
+			taxCode: student.taxCode,
+			courseId : course ? course.id : undefined
+		});
 
 	}
 
