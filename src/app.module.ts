@@ -7,8 +7,6 @@ import {
 	ClassController,
 	StudentController,
 	Class,
-	AcademicYear,
-	ClassEnrollment,
 	Student
 } from './class-manager';
 
@@ -21,7 +19,7 @@ import * as path from 'path';
 			autoLoadEntities: true,
 			database: path.resolve(__dirname, '..', 'db.sqlite')
 		}),
-		TypeOrmModule.forFeature([Class, AcademicYear, ClassEnrollment, Student])
+		TypeOrmModule.forFeature([Class, Student])
 	],
 
 	controllers: [ClassController, StudentController],

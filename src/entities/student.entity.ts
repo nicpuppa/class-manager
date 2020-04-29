@@ -1,25 +1,26 @@
-import { ClassEnrollment } from 'src/entities';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Class } from 'src/entities';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
-@Entity({ name: 'ALUNNO' })
+@Entity({ name: 'STUDENTS' })
 export class Student {
 
 	@PrimaryGeneratedColumn({ name: 'ID' })
 	public id: number;
 
-	@Column({ name: 'NOME' })
+	@Column({ name: 'NAME' })
 	public name: string;
 
-	@Column({ name: 'COGNOME' })
+	@Column({ name: 'SURNAME' })
 	public surname: string;
 
-	@Column({ name: 'CODICE_SIDI' })
+	@Column({ name: 'SIDI_CODE' })
 	public sidiCode: string;
 
-	@Column({ name: 'CODICE_FISCALE' })
+	@Column({ name: 'TAX_CODE' })
 	public taxCode: string;
 
-	@OneToMany(() => ClassEnrollment, enrollment => enrollment.student, {lazy: true})
-	public enrollments: Promise<ClassEnrollment[]>;
+	@JoinColumn({ name: 'CLASS_ID' })
+	@ManyToOne(() => Class, clazz => clazz.students, {eager: true, lazy: false})
+	public clazz: Class;
 
 }

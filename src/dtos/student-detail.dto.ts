@@ -1,4 +1,5 @@
-import { ClassDTO } from 'src/dtos';
+import { ClassDTO } from '.';
+
 export class StudentDetailDTO {
 
 	public readonly class: ClassDTO;
@@ -9,9 +10,7 @@ export class StudentDetailDTO {
 		public readonly surname: string,
 		public readonly sidiCode: string,
 		public readonly taxCode: string,
-		clazz: ClassDTO
-	) {
-		this.class = clazz;
-	}
+		public readonly classId: number
+	) { }
 
 }

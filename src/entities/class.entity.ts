@@ -1,19 +1,19 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { ClassEnrollment } from 'src/entities';
+import { Student } from '.';
 
-@Entity({ name: 'CLASSE' })
+@Entity({ name: 'CLASSES' })
 export class Class {
 
 	@PrimaryGeneratedColumn({ name: 'ID' })
 	public id: number;
 
-	@Column({ name: 'ANNO' })
-	public year: number;
+	@Column({ name: 'GRADE' })
+	public grade: number;
 
-	@Column({ name: 'SEZIONE' })
-	public section: string;
+	@Column({ name: 'NAME' })
+	public name: string;
 
-	@OneToMany(() => ClassEnrollment, enrollment => enrollment.class, {lazy: true})
-	public enrollments: Promise<ClassEnrollment[]>;
+	@OneToMany(() => Student, student => student.clazz, {lazy: true})
+	public students: Promise<Student[]>;
 
 }
