@@ -1,5 +1,5 @@
 import { isNullOrUndefined } from 'util';
-import { CreateStudentDTO } from 'src/dtos/create-student.dto';
+import { SaveStudentDTO } from 'src/dtos/save-student.dto';
 import { StudentService } from 'src/services';
 import {
 	Controller,
@@ -12,10 +12,11 @@ import {
 	Body,
 	BadRequestException,
 	HttpCode,
-	Delete
+	Delete,
+	Put
 } from '@nestjs/common';
 import { StudentDetailDTO } from 'src/dtos';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags, ApiParam, ApiOperation, getSchemaPath } from '@nestjs/swagger';
 
 @ApiTags('students')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -41,13 +42,37 @@ export class StudentController {
 	@Post()
 	@HttpCode(201)
 	@ApiCreatedResponse({ type: StudentDetailDTO })
-	public addStudent(@Body() student: CreateStudentDTO): Promise<StudentDetailDTO> {
+	public addStudent(@Body() student: SaveStudentDTO): Promise<StudentDetailDTO> {
 
 		if (isNullOrUndefined(student)) {
 			throw new BadRequestException(`empty body`);
 		}
 
 		return this.studentService.addStudent(student);
+
+	}
+
+	@Put(':id')
+	@ApiCreatedResponse({ type: StudentDetailDTO })
+	public updateStudentPut(@Param('id') id: number, @Body() student: SaveStudentDTO): Promise<StudentDetailDTO> {
+
+		if (isNullOrUndefined(student)) {
+			throw new BadRequestException(`empty body`);
+		}
+
+		return this.studentService.updateStudent(id, student);
+
+	}
+
+	@Post(':id')
+	@ApiCreatedResponse({ type: StudentDetailDTO })
+	public updateStudentPost(@Param('id') id: number, @Body() student: SaveStudentDTO): Promise<StudentDetailDTO> {
+
+		if (isNullOrUndefined(student)) {
+			throw new BadRequestException(`empty body`);
+		}
+
+		return this.studentService.updateStudent(id, student);
 
 	}
 

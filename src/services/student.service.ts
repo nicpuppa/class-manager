@@ -4,7 +4,7 @@ import { Student, Course } from 'src/entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { isNullOrUndefined } from 'util';
-import { CreateStudentDTO } from 'src/dtos/create-student.dto';
+import { SaveStudentDTO } from 'src/dtos/save-student.dto';
 
 @Injectable()
 export class StudentService {
@@ -55,34 +55,48 @@ export class StudentService {
 	 * @param id non-null
 	 * @throws `Error` when id is null
 	 */
-	public async addStudent(createStudentDTO: CreateStudentDTO): Promise<StudentDetailDTO> {
+	public async addStudent(createStudentDTO: SaveStudentDTO): Promise<StudentDetailDTO> {
 
 		if (isNullOrUndefined(createStudentDTO)) {
 			throw new Error('student cannot be null');
 		}
 
-		const { name, surname, sidiCode, taxCode, courseId } = createStudentDTO;
-
 		let student = new Student();
 
-		student.name = name;
-		student.surname = surname;
-		student.sidiCode = sidiCode;
-		student.taxCode = taxCode;
+		student = await this.saveOrUpdate(student, createStudentDTO);
 
-		if (!isNullOrUndefined(courseId)) {
+		return this.studentToStudentDetailDto(student);
 
-			const course = await this.courseRepository.findOne(courseId);
+	}
 
-			if (isNullOrUndefined(course)) {
-				throw new NotFoundException('course');
-			}
+	/**
+	 * update student
+	 *
+	 * ### examples
+	 *
+	 * ```typescript
+	 *
+	 * const student = await studentService.updateStudent(1, {});
+	 * console.log(student);
+	 *
+	 * ```
+	 *
+	 * @param id non-null
+	 * @throws `Error` when id is null
+	 */
+	public async updateStudent(id: number, saveStudentDTO: SaveStudentDTO): Promise<StudentDetailDTO> {
 
-			student.course = course;
-
+		if (isNullOrUndefined(id)) {
+			throw new Error(`id cannot be null`);
 		}
 
-		student = await this.studentRepository.save(student);
+		if (isNullOrUndefined(saveStudentDTO)) {
+			throw new Error('student cannot be null');
+		}
+
+		let student = await this.studentRepository.findOne(id);
+
+		student = await this.saveOrUpdate(student, saveStudentDTO);
 
 		return this.studentToStudentDetailDto(student);
 
@@ -104,6 +118,31 @@ export class StudentService {
 
 	}
 
+	private async saveOrUpdate(student: Student, dto: SaveStudentDTO): Promise<Student> {
+
+		const { name, surname, sidiCode, taxCode, courseId } = dto;
+
+		student.name = name;
+		student.surname = surname;
+		student.sidiCode = sidiCode;
+		student.taxCode = taxCode;
+		student.course = null;
+
+		if (!isNullOrUndefined(courseId)) {
+
+			const course = await this.courseRepository.findOne(courseId);
+
+			if (isNullOrUndefined(course)) {
+				throw new NotFoundException('course');
+			}
+
+			student.course = course;
+
+		}
+
+		return await this.studentRepository.save(student);
+
+	}
 
 	private studentToStudentDetailDto(student: Student): StudentDetailDTO {
 

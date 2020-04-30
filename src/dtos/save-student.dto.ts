@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsInt, IsOptional } from 'class-validator';
 
 @Exclude()
-export class CreateStudentDTO {
+export class SaveStudentDTO {
 
 	@IsNotEmpty()
 	@IsString()
