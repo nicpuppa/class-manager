@@ -16,7 +16,7 @@ import {
 	Put
 } from '@nestjs/common';
 import { StudentDetailDTO } from 'src/dtos';
-import { ApiCreatedResponse, ApiTags, ApiParam, ApiOperation, getSchemaPath } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('students')
 @UseInterceptors(ClassSerializerInterceptor)
