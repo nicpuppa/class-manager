@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { Student, Course } from 'src/entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { isNull, isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from 'util';
 import { SaveStudentDTO } from 'src/dtos/save-student.dto';
 import { StudentSearchDTO } from 'src/dtos/student-search.dto';
 
@@ -38,21 +38,6 @@ export class StudentService {
 		const student = await this.studentRepository.findOne(id);
 
 		return this.studentToStudentDetailDto(student);
-
-	}
-
-
-	public async findByName(name: string): Promise<StudentDetailDTO[]> {
-
-		if (isNullOrUndefined(name)) throw new Error('name cannot be null');
-
-		// retrieve student with latest enrollment
-		const students = await this.studentRepository
-				.createQueryBuilder('student')
-				.where(`student.name LIKE :name`, {name: "%" + name + "%"})
-			.getMany();
-
-		return students.map(student => this.studentToStudentDetailDto(student));
 
 	}
 

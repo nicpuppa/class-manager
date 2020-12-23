@@ -40,20 +40,6 @@ export class StudentController {
 
 	}
 
-	@Get('name/:name')
-	@ApiCreatedResponse({ type: StudentDetailDTO })
-	public async findByName(@Param('name') name: string): Promise<StudentDetailDTO[]> {
-
-		// find student by id
-		const students = this.studentService.findByName(name);
-
-		// return 404 http status when student not exists
-		if (!students) throw new NotFoundException(`Student ${name}`);
-
-		return students;
-
-	}
-
 	@Post()
 	@ApiCreatedResponse({ type: StudentSearchDTO })
 	public async findAll(@Body() student: StudentSearchDTO): Promise<StudentDetailDTO[]> {
