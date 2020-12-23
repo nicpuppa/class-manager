@@ -40,6 +40,21 @@ export class StudentService {
 
 	}
 
+
+	public async findByName(name: string): Promise<StudentDetailDTO[]> {
+
+		if (isNullOrUndefined(name)) throw new Error('name cannot be null');
+
+		// retrieve student with latest enrollment
+		const students = await this.studentRepository
+				.createQueryBuilder('student')
+				.where(`student.name LIKE :name`, {name: "%" + name + "%"})
+			.getMany();
+
+		return students.map(student => this.studentToStudentDetailDto(student));
+
+	}
+
 		/**
 	 * add new student
 	 *
