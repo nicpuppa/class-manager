@@ -15,8 +15,9 @@ import {
 	Delete,
 	Put
 } from '@nestjs/common';
-import { StudentDetailDTO } from 'src/dtos';
+import { StudentDetailDTO, } from 'src/dtos';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { StudentSearchDTO } from 'src/dtos/student-search.dto';
 
 @ApiTags('students')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -48,6 +49,20 @@ export class StudentController {
 
 		// return 404 http status when student not exists
 		if (!students) throw new NotFoundException(`Student ${name}`);
+
+		return students;
+
+	}
+
+	@Post()
+	@ApiCreatedResponse({ type: StudentSearchDTO })
+	public async findAll(@Body() student: StudentSearchDTO): Promise<StudentDetailDTO[]> {
+
+		// find student by id
+		const students = await this.studentService.findAll(student);
+
+		// return 404 http status when student not exists
+		if (!students) throw new NotFoundException(`Student ${student}`);
 
 		return students;
 

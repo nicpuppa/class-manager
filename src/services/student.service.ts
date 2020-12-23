@@ -3,8 +3,9 @@ import { Repository } from 'typeorm';
 import { Student, Course } from 'src/entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { isNullOrUndefined } from 'util';
+import { isNull, isNullOrUndefined } from 'util';
 import { SaveStudentDTO } from 'src/dtos/save-student.dto';
+import { StudentSearchDTO } from 'src/dtos/student-search.dto';
 
 @Injectable()
 export class StudentService {
@@ -53,6 +54,17 @@ export class StudentService {
 
 		return students.map(student => this.studentToStudentDetailDto(student));
 
+	}
+
+	public async findAll(student: StudentSearchDTO): Promise<StudentDetailDTO[]> {
+
+		if (isNullOrUndefined(student)) throw new Error('student cannot be null');
+
+		let query = await this.applyFilter(student);
+
+		const students = await query.getMany();
+
+		return students.map(student => this.studentToStudentDetailDto(student));
 	}
 
 		/**
@@ -176,6 +188,23 @@ export class StudentService {
 			courseId : course ? course.id : undefined
 		});
 
+	}
+
+	private async applyFilter(student: StudentSearchDTO) {
+		let query = await this.studentRepository.createQueryBuilder('student');
+
+		if (!isNullOrUndefined(student.id)) {
+			query = query.andWhere('student.id = :id', { id: student.id });
+		}
+
+		if (!isNullOrUndefined(student.name)) {
+			query = query.andWhere('student.name LIKE :name', { name: "%" + student.name + "%" });
+		}
+
+		if (!isNullOrUndefined(student.surname)) {
+			query = query.andWhere('student.surname LIKE :surname', { name: "%" + student.surname + "%" });
+		}
+		return query;
 	}
 
 }
